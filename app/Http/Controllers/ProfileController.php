@@ -124,7 +124,7 @@ class ProfileController extends Controller
             )
         );
 
-        return redirect()->route('profile');
+        return redirect()->route('profile')->with('status', 'Datos actualizados correctamente');;
     }
 
     /**

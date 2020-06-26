@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-  @if ($logs)
+  @if ($logs != null)
   <div class="col-md-12">
     <div class="card">
       <div class="card-header card-header-primary">
@@ -82,7 +82,7 @@
               </tr>
               @empty
               <tr>
-                <td colspan="6" style="text-align: center">No se encontraron facturas</td>
+                <td colspan="7" style="text-align: center">No se encontraron facturas</td>
               </tr>
               @endforelse
             </tbody>
@@ -91,7 +91,34 @@
       </div>
     </div>
   </div>
-
+  @else
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Listado de incidencia</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>Código usuario</th>
+              <th>Periodo</th>
+              <th>Mes</th>
+              <th>Ruta de Archivo</th>
+              <th>Nombre de Archivo</th>
+              <th>Total Descargas</th>
+              <th>Detalle</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="7" style="text-align: center">No se encontraron facturas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   @endif
 </div>
 

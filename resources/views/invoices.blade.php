@@ -25,17 +25,24 @@
             <tbody>
               @forelse ($invoices as $invoiceItem)
               <tr>
-                <td>{{ $invoiceItem->Periodo}}</td>
+                <td class="text-center">{{ $invoiceItem->Periodo}}</td>
                 <td>{{ $invoiceItem->Mes}}</td>
-                <td>{{ $invoiceItem->Desde}}</td>
-                <td>{{ $invoiceItem->Hasta}}</td>
-                <td>{{ $invoiceItem->Total_Ingreso}}</td>
-                <td>{{ $invoiceItem->Total_Egreso}}</td>
-                <td>{{ $invoiceItem->Total_Aporte}}</td>
-                <td>{{ $invoiceItem->Neto}}</td>
-                <td><a href="{{ $invoiceItem->cruta_file}}"><span class="material-icons">
-                      cloud_download
-                    </span></a></td>
+                <td class="text-center">{{ $invoiceItem->Desde}}</td>
+                <td class="text-center">{{ $invoiceItem->Hasta}}</td>
+                <td class="text-right">{{ $invoiceItem->Total_Ingreso}}</td>
+                <td class="text-right">{{ $invoiceItem->Total_Egreso}}</td>
+                <td class="text-right">{{ $invoiceItem->Total_Aporte}}</td>
+                <td class="text-right">{{ $invoiceItem->Neto}}</td>
+                <td class="text-center">
+                  <form method="POST" action="{{ route('invoices.download') }}" id="download">
+                    @csrf
+                    <input type="hidden" value="{{ $invoiceItem->id_cbdocumentos}}" id="id" name="id">
+                    <a href="#" onclick="document.getElementById('download').submit()"><span class="material-icons">
+                        cloud_download
+                      </span></a>
+                  </form>
+                </td>
+
               </tr>
               @empty
               <tr>

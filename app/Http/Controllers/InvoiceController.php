@@ -27,8 +27,8 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = DB::select('EXEC dbo.sp_Web_Consulta_Boletas_Pago @cruc = ?,
-        @ccod_traba = ?, @ccod_eje = ?, @ccod_tpla =? ',
-        [session('rucSession'), Auth::user()->ccod_traba, 2019, 10]);
+        @ccod_traba = ?',
+        [session('rucSession'), Auth::user()->ccod_traba]);
 
         Log::create([
             'user_id' => Auth::user()->id,
@@ -88,7 +88,7 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {    
         /*    
         NmLndocumento::create([
@@ -96,6 +96,7 @@ class InvoiceController extends Controller
             'dfch_descarga' => 1,
             'cpc_descarga' => $request->getClientIp()
         ]);*/       
+        return $request;
     }
 
     /**

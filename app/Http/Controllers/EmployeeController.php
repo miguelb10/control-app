@@ -98,32 +98,38 @@ class EmployeeController extends Controller
     public function update(Request $request)
     {
         $userData = User::where('ccod_traba', $request->input('id'))->first();
+        $dateCreate = date_create(date('Y-m-d'));
         if ($userData != null) {
             $maxAccess = date('d/m/Y', strtotime($request->input('fechaCaducidad')));
-            if ($userData->access == false) {
-                NmCttraba::where('ccod_traba', $userData['ccod_traba'])->update(
-                    array(
-                        'acceso_web_traba' => true
-                    )
-                );
-                User::where('ccod_traba', $request->input('ccod_traba'))->update(
-                    array(
-                        'access' => true,
-                        'access_end_at' => null
-                    )
-                );
-                return redirect()->route('employees')->with('status', 'Se otorgarón los accesos a la web');
-            }
-            if ($maxAccess >= date('d/m/Y')) {
-
+            if ($userData->access == 0) {
                 NmCttraba::where('ccod_traba', $request->input('id'))->update(
                     array(
-                        'fdef10' => $maxAccess
+                        'acceso_web_traba' => true,
+                        'fdef10' => null
                     )
                 );
                 User::where('ccod_traba', $request->input('id'))->update(
                     array(
-                        'access_end_at' => $maxAccess
+                        'access' => true,
+                        'access_end_at' => null,
+                        'first_login' => true
+                    )
+                );
+                return redirect()->route('employees')->with('status', 'Se otorgarón los accesos a la web 1');
+            }
+            //$maxAccess >= date('d/m/Y')
+            if ($dateCreate <= date_create($request->input('fechaCaducidad'))) {
+
+                NmCttraba::where('ccod_traba', $request->input('id'))->update(
+                    array(
+                        'fdef10' => $maxAccess,
+                        'acceso_web_traba' => true
+                    )
+                );
+                User::where('ccod_traba', $request->input('id'))->update(
+                    array(
+                        'access_end_at' => $maxAccess,
+                        'access' => true
                     )
                 );
 
@@ -142,7 +148,8 @@ class EmployeeController extends Controller
             ]);
             NmCttraba::where('ccod_traba', $newUser['ccod_traba'])->update(
                 array(
-                    'acceso_web_traba' => true
+                    'acceso_web_traba' => true,
+                    'fdef10' => null
                 )
             );
             return redirect()->route('employees')->with('status', 'Se otorgarón los accesos a la web');
