@@ -16,37 +16,37 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header card-header-primary">
-        <h4 class="card-title ">Registro de Emisión de Documentos</h4>
+        <h4 class="card-title ">Administrar accesos</h4>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table id="users" class="table table-bordered" style="width:100%">
-            <thead class=" text-primary">
+            <thead class=" text-primary text-center">
               <th>Código</th>
               <th>Nombre</th>
               <th>Apellido Paterno</th>
               <th>Apellido Mterno</th>
               <th>Correo</th>
               <th>Acceso</th>
-              <th>Asignar</th>
+              <th>Acción</th>
             </thead>
             <tbody>
               @forelse ($employees as $employee)
               <tr>
-                <td>{{ $employee->ccod_traba}}</td>
+                <td class="text-center">{{ $employee->ccod_traba}}</td>
                 <td>{{ $employee->cnomb_traba}}</td>
                 <td>{{ $employee->capat_traba}}</td>
                 <td>{{ $employee->camat_traba}}</td>
                 <td>{{ $employee->cemail_traba}}</td>
                 @if ($employee->acceso_web_traba == true)
-                <td>Si</td>
-                <td>
-                  <a href="{{ route('employee.show', $employee->ccod_traba) }}"><input type="submit" value="Retirar"
+                <td class="text-center">Si</td>
+                <td class="text-center">
+                  <a href="{{ route('employee.show', $employee->ccod_traba) }}"><input type="submit" value="Restringir"
                       class="btn-danger"></a>
                 </td>
                 @else
-                <td>No</td>
-                <td>
+                <td class="text-center">No</td>
+                <td class="text-center">
                   <form method="POST" action="{{ route('employees.update') }}" id="accessEmployee">
                     @csrf
                     <input type="hidden" value="{{ $employee->ccod_traba}}" id="id" name="id">

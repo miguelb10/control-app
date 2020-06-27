@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Log;
+use App\NmLndocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,14 @@ class HomeController extends Controller
             'description' => 'Inicio',
             'created_at' => ''
         ]);
-        //return session('rucSession');
-        return view('home', compact('validateFirstLogin'));
+        
+        //return Log::all();
+
+        $cantLogin = Log::where('description', 'Inicio sesión')->get();
+        $cantHome = Log::where('description', 'Inicio')->get();
+        $cantBoletas = Log::where('description', 'Vista Facturas')->get();
+        $cantDescargas = NmLndocumento::all();
+
+        return view('home', compact('validateFirstLogin', 'cantLogin', 'cantHome', 'cantBoletas', 'cantDescargas'));
     }
 }

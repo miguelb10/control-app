@@ -8,6 +8,12 @@ $(document).ready(function() {
         "lengthChange": false
     });
 });
+$(document).ready(function() {
+    $('#logs').DataTable({
+        "lengthChange": false
+    });
+});
+
 $.extend(true, $.fn.dataTable.defaults, {
     "language": {
         "decimal": ",",

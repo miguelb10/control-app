@@ -1,7 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
+@if (session('status'))
+<div class="alert alert-success" role="alert">
+  {{ session('status') }}
+</div>
+@endif
+@if (session('statusFail'))
+<div class="alert alert-danger" role="alert">
+  {{ session('statusFail') }}
+</div>
+@endif
+@if(Session::has('download.in.the.next.request'))
+   <meta http-equiv="refresh" content="5;url={{ Session::get('download.in.the.next.request') }}">
+@endif
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -11,7 +23,7 @@
       <div class="card-body">
         <div class="table-responsive">
           <table id="invoices" class="table table-bordered" style="width:100%">
-            <thead class=" text-primary">
+            <thead class=" text-primary text-center">
               <th>Periodo</th>
               <th>Mes</th>
               <th>Desde</th>
@@ -36,7 +48,7 @@
                 <td class="text-center">
                   <form method="POST" action="{{ route('invoices.download') }}" id="download">
                     @csrf
-                    <input type="hidden" value="{{ $invoiceItem->id_cbdocumentos}}" id="id" name="id">
+                    <input type="hidden" value="{{ $invoiceItem->id_cbdocumentos}}" id="id_doc" name="id_doc">
                     <a href="#" onclick="document.getElementById('download').submit()"><span class="material-icons">
                         cloud_download
                       </span></a>

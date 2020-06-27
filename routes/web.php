@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home1');
-Route::get('/invoices', 'InvoiceController@Index')->name('invoices');
 Route::get('/invoices', 'InvoiceController@Index')->name('invoices.filter');
 Route::post('/invoices', 'InvoiceController@Update')->name('invoices.download');
 
@@ -19,7 +18,8 @@ Route::post('/employees', 'EmployeeController@Update')->name('employees.update')
 Route::get('/employees/{employee}', 'EmployeeController@Show')->name('employee.show');
 
 Route::get('/logs', 'LogController@Index')->name(('logs'));
-Route::post('/logs', 'LogController@Show')->name(('logs.show'));
+Route::get('/downloads', 'LogController@Index')->name(('logs.sho'));
+Route::post('/downloads', 'LogController@Show')->name(('logs.show'));
 
 Route::get('/profile', 'ProfileController@Index')->name('profile');
 Route::post('/profile','ProfileController@Update')->name('profile.update');

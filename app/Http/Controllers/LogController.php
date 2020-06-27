@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Log;
+use App\NmLndocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,11 +27,11 @@ class LogController extends Controller
      */
     public function index()
     {
-        //$invoices = DB::table('invoices')->get();
-        /*$logs = DB::select('EXEC dbo.sp_Web_Consulta_Login @cruc = ?,
-        @ccod_traba = ?, @ccod_eje = ?, @ccod_tpla = ?, @ctipo = ? ',
-        [session('rucSession'), 44112201, 2019, 10, 'I']);*/
-        $logs = null;
+
+        $logs=DB::select('EXEC dbo.sp_Web_Consulta_Login @cruc = ?,
+        @ccod_traba = ?, @ccod_eje = ?, @ccod_tpla = ?, @ctipo = ?',
+        [session('rucSession'), '', '', '', 'I']);
+        //$logs = null;
         $selectTipo = DB::select('Exec dbo.sp_Web_Consulta_Login @cruc=?
         ,@ctipo=?',[session('rucSession'), 'P']);
 
@@ -71,7 +72,7 @@ class LogController extends Controller
      */
     public function show(Request $request)
     {
-        
+        /*        
         $getCode = $request->input('ccod_traba');
         if($getCode != null){
         $logs=DB::select('EXEC dbo.sp_Web_Consulta_Login @cruc = ?,
@@ -87,8 +88,11 @@ class LogController extends Controller
         }
         $selectTipo = DB::select('Exec dbo.sp_Web_Consulta_Login @cruc=?
         ,@ctipo=?',[session('rucSession'), 'P']);
-        return view('logs', compact('logs', 'selectTipo'));
-        //return $logs;
+        return view('logs', compact('logs', 'selectTipo'));*/
+
+        $details = NmLndocumento::where('id_cbdocumentos', $request->input('id_doc'))->get();
+        return view('downloads', compact('details'));
+        //echo $request->input('id_doc');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Log;
 use App\NmCttraba;
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -72,9 +73,16 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = NmCttraba::where('ccod_traba', $id)->first();
-        return view('employee', compact('employee'));
-        //return date('d-m-yy');
+        try {
+            $employee = NmCttraba::where('ccod_traba', $id)->first();
+            if ($employee != null) {
+                return view('employee', compact('employee'));
+            } else {
+                return redirect()->route('employees')->with('statusFail', 'Usuario no encontrado!');
+            }
+        } catch (Exception $e) {
+            return redirect()->route('employees')->with('statusFail', 'Usuario no encontrado!');
+        }
     }
 
     /**

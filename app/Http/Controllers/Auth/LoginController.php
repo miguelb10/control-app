@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\AdCtcia;
 use App\Http\Controllers\Controller;
 use App\Log;
 use App\NmCttraba;
@@ -97,6 +98,8 @@ class LoginController extends Controller
                 ]);
                 $imgRuta = WebConfig::where('ccod_regtri', $request->input('ruc'))->first();
                 session(['rucSession' => $request->input('ruc')]);
+                $empresa = AdCtcia::where('ccod_regtri', $request->input('ruc'))->first();
+                session(['empSession' => $empresa->cdsc_cia]);
                 session(['imgRuta' => $imgRuta->ruta]);
                 $user->update([
                     'ultimo_login' => Carbon::now()->toDateString(),
