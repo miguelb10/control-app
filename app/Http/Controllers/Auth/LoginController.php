@@ -96,11 +96,12 @@ class LoginController extends Controller
                     'page' => '/home',
                     'description' => 'Inicio sesión',
                 ]);
-                $imgRuta = WebConfig::where('ccod_regtri', $request->input('ruc'))->first();
+                $webConfig = WebConfig::where('ccod_regtri', $request->input('ruc'))->first();
                 session(['rucSession' => $request->input('ruc')]);
                 $empresa = AdCtcia::where('ccod_regtri', $request->input('ruc'))->first();
                 session(['empSession' => $empresa->cdsc_cia]);
-                session(['imgRuta' => $imgRuta->ruta]);
+                session(['imgRuta' => $webConfig->ruta]);
+                session(['tema' => $webConfig->tema_color]);
                 $user->update([
                     'ultimo_login' => Carbon::now()->toDateString(),
                     'ip' => $request->getClientIp()

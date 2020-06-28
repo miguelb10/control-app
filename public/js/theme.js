@@ -1,11 +1,13 @@
 $(document).ready(function() {
     $('#invoices').DataTable({
-        "lengthChange": false
+        "lengthChange": false,
+        responsive: true
     });
 });
 $(document).ready(function() {
     $('#users').DataTable({
-        "lengthChange": false
+        "lengthChange": false,
+        responsive: true
     });
 });
 $(document).ready(function() {

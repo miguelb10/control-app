@@ -46,8 +46,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Email</label>
-                                    <input type="text" id="cemail_traba" name="cemail_traba" class="form-control"
-                                        value="{{$employee->cemail_traba}}">
+                                    <input type="email" id="cemail_traba" name="cemail_traba" class="form-control"
+                                        value="{{$employee->cemail_traba}}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Fecha de caducidad</label>
-                                    <input class="form-control" type="date" value="{{ date('yy-m-d') }}" id="fechaCaducidad" name="fechaCaducidad">
+                                    <input class="form-control" style="color: green" type="date" value="{{ date('yy-m-d') }}" id="fechaCaducidad" name="fechaCaducidad">
                                 </div>
                             </div>
                         </div>

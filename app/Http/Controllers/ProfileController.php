@@ -13,20 +13,10 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfileController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         Log::create([
@@ -41,66 +31,31 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         //return $request->input('ccod_traba');
         $rules = [
-            'password' =>  'required|min:5|confirmed'
+            'password' =>  'required|min:5|confirmed',
+            'cndni_traba' => 'required|min:8|max:8',
+            'cnomb_traba' => 'required',
+            'capat_traba' => 'required',
+            'camat_traba' => 'required',
+            'cemail_traba' => 'required|email',
+            'cnruc_traba' => 'numeric|nullable'
         ];
 
         $messages = [
+            'password.required' => 'El campo no puede ser vacío',
             'password.confirmed' => 'Las contraseña no coinciden',
-            'password.min' => 'La contraseña debe ser de minimo 7 digitos'
+            'password.min' => 'La contraseña debe ser de mínimo 5 dígitos',
+            'cndni_traba.min' => 'El DNI debe tener 8 dígitos',
+            'cndni_traba.max' => 'El DNI debe tener 8 dígitos',
+            'cnomb_traba.required' => 'El campo no puede ser vacío',
+            'capat_traba.required' => 'El campo no puede ser vacío',
+            'camat_traba.required' => 'El campo no puede ser vacío',
+            'cemail_traba.required' => 'El campo no puede ser vacío',
+            'cemail_traba.email' => 'Formato email incorrecto',
+            'cnruc_traba.numeric' => 'Formato numérico incorrecto'
         ];
 
         $this->validate($request, $rules, $messages);
@@ -125,16 +80,5 @@ class ProfileController extends Controller
         );
 
         return redirect()->route('profile')->with('status', 'Datos actualizados correctamente');;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

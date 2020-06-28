@@ -20,7 +20,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table id="users" class="table table-bordered" style="width:100%">
+          <table id="users" class="table table-bordered nowrap" style="width:100%">
             <thead class=" text-primary text-center">
               <th>Código</th>
               <th>Nombre</th>

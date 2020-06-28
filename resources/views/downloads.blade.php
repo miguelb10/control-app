@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="logs" class="table table-bordered" style="width:100%">
+                    <table id="logs" class="table table-bordered nowrap" style="width:100%">
                         <thead class="text-primary text-center">
                             <th>ID documento</th>
                             <th>Fecha y hora</th>

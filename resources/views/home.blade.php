@@ -1,7 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
+@if (session('statusFail'))
+<div class="alert alert-danger" role="alert">
+  {{ session('statusFail') }}
+</div>
+@endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -76,6 +80,44 @@
                 <h3 class="card-title">{{ sizeOf($cantDescargas)}}</h3>
             </div>
             <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">Cambiar tema</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <form method="POST" action="{{ route('home.change') }}" id="changeV">
+                                @csrf
+                                <input type="hidden" value="verde" id="tema" name="tema">
+                                <a href="#" class="btn btn-success"
+                                    onclick="document.getElementById('changeV').submit()">Verde</a>
+                            </form>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <form method="POST" action="{{ route('home.change') }}" id="changeR">
+                                @csrf
+                                <input type="hidden" value="rojo" id="tema" name="tema">
+                                <a href="#" class="btn btn-danger"
+                                    onclick="document.getElementById('changeR').submit()">Rojo</a>
+                            </form>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <form method="POST" action="{{ route('home.change') }}" id="changeA">
+                                @csrf
+                                <input type="hidden" value="azul" id="tema" name="tema">
+                                <a href="#" class="btn btn-primary"
+                                    onclick="document.getElementById('changeA').submit()">Azul</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -20,6 +20,7 @@
   <script src="{{ asset('js/core/bootstrap-material-design.min.js') }}" defer></script>
   <script src="{{ asset('js/dashboard/material-dashboard.js') }}" defer></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" defer></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js" defer></script>  
   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js" defer></script>
   <script src="{{ asset('js/theme.js') }}" defer></script>
   <!-- Fonts
@@ -33,8 +34,13 @@
   <!-- Styles -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/dashboard/material-dashboard.css?v=2.1.2') }}" rel="stylesheet">
+  @if (session('tema')!=null)
+  <link href="{{ asset(session('tema')) }}" rel="stylesheet">      
+  @else
+  <link href="{{ asset('css/dashboard/verde.css?v=2.1.2') }}" rel="stylesheet">      
+  @endif
 </head>
 
 <body>
@@ -68,14 +74,14 @@
           @if (Auth::user()->role == 'admin')
           <li class="nav-item ">
             <a class="nav-link" href="/employees">
-              <i class="material-icons">persons</i>
-              <p>Administrar usuarios</p>
+              <i class="material-icons">supervisor_account</i>
+              <p>Administrar accesos</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/logs">
-              <i class="material-icons">dashboard</i>
-              <p>Historial de registros</p>
+              <i class="material-icons">get_app</i>
+              <p>Historial de descargas</p>
             </a>
           </li>
           @endif
@@ -86,9 +92,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-          <a class="navbar-brand" href="javascript:;">RUC: {{ session('rucSession')}} - {{ session('empSession') }}</a>
-          </div>
-          <div class="navbar-wrapper">
+          <a class="navbar-brand tema_color" href="javascript:;"><!--RUC: {{ session('rucSession')}} - -->{{ session('empSession') }}</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -100,12 +104,12 @@
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="navbar-brand" href="javascript:;">Bienvenido {{ Auth::user()->name }}</a>
+                <a class="navbar-brand tema_color" href="javascript:;">Bienvenid@ {{ Auth::user()->name }}</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">person</i>
+                  <i class="material-icons tema_color">person</i>
                   <p class="d-lg-none d-md-block">
                     Account
                   </p>

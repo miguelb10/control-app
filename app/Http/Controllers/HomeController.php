@@ -4,26 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Log;
 use App\NmLndocumento;
+use App\WebConfig;
+use Exception;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
 
     public function index()
     {
@@ -34,8 +26,6 @@ class HomeController extends Controller
             'description' => 'Inicio',
             'created_at' => ''
         ]);
-        
-        //return Log::all();
 
         $cantLogin = Log::where('description', 'Inicio sesión')->get();
         $cantHome = Log::where('description', 'Inicio')->get();
@@ -43,5 +33,43 @@ class HomeController extends Controller
         $cantDescargas = NmLndocumento::all();
 
         return view('home', compact('validateFirstLogin', 'cantLogin', 'cantHome', 'cantBoletas', 'cantDescargas'));
+    }
+
+    public function change(Request $request)
+    {
+        try {
+            if ($request->input('tema') == 'verde') {
+                WebConfig::where('ccod_regtri', session('rucSession'))->update(
+                    array(
+                        'tema_color' => 'css/dashboard/verde.css?v=2.1.2'
+                    )
+                );
+                session(['tema' => 'css/dashboard/verde.css?v=2.1.2']);
+
+                return redirect()->route('home1')->with('status', 'Se aplico el nuevo tema');
+            } else if ($request->input('tema') == 'rojo') {
+                WebConfig::where('ccod_regtri', session('rucSession'))->update(
+                    array(
+                        'tema_color' => 'css/dashboard/rojo.css?v=2.1.2'
+                    )
+                );
+                session(['tema' => 'css/dashboard/rojo.css?v=2.1.2']);
+
+                return redirect()->route('home1')->with('status', 'Se aplico el nuevo tema');
+            } else if ($request->input('tema') == 'azul') {
+                WebConfig::where('ccod_regtri', session('rucSession'))->update(
+                    array(
+                        'tema_color' => 'css/dashboard/azul.css?v=2.1.2'
+                    )
+                );
+                session(['tema' => 'css/dashboard/azul.css?v=2.1.2']);
+
+                return redirect()->route('home1')->with('status', 'Se aplico el nuevo tema');
+            } else {
+                return redirect()->route('home1')->with('statusFail', 'No se encontro el tema seleccionado');
+            }
+        } catch (Exception $e) {
+            return redirect()->route('home1')->with('statusFail', 'Error al aplicar tema');;
+        }
     }
 }

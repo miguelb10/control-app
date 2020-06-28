@@ -22,8 +22,8 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table id="invoices" class="table table-bordered" style="width:100%">
-            <thead class=" text-primary text-center">
+          <table id="invoices" class="table table-bordered nowrap" style="width:100%">
+            <thead class="text-primary text-center">
               <th>Periodo</th>
               <th>Mes</th>
               <th>Desde</th>
