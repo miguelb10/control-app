@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
         $validateFirstLogin = Auth::user()->first_login;
         Log::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id_cttraba,
             'page' => '/home',
             'description' => 'Inicio',
             'created_at' => ''

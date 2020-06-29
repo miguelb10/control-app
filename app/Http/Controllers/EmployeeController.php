@@ -23,13 +23,13 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = DB::select('EXEC dbo.sp_Web_Consulta_Login @cruc = ?, @ccod_traba = ?, 
-        @ctipo = ?', [session('rucSession'), 70355383, "E"]);
+        @ctipo = ?', [session('rucSession'), '', "E"]);
 
         //NmCttraba::where('ccod_cia', session('rucSession'))->get();
         //DB::table('nm_cttraba')->get();
 
         Log::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id_cttraba,
             'page' => '/employees',
             'description' => 'administrar empleados'
         ]);
@@ -39,7 +39,7 @@ class EmployeeController extends Controller
     public function show($id)
     {
         try {
-            $employee = NmCttraba::where('ccod_traba', $id)->first();
+            $employee = User::where('ccod_traba', $id)->first();
             if ($employee != null) {
                 return view('employee', compact('employee'));
             } else {
@@ -54,69 +54,70 @@ class EmployeeController extends Controller
     {
         try {
             $userData = User::where('ccod_traba', $request->input('id'))->first();
-            $newUser = NmCttraba::where('ccod_traba', $request->input('id'))->first();
+            //$newUser = NmCttraba::where('ccod_traba', $request->input('id'))->first();
             $dateCreate = date_create(date('Y-m-d'));
-            if ($userData != null) {
-                $maxAccess = date('d/m/Y', strtotime($request->input('fechaCaducidad')));
-                if ($userData->access == 0) {
-                    NmCttraba::where('ccod_traba', $request->input('id'))->update(
+            //if ($userData != null) {
+            $maxAccess = date('d/m/Y', strtotime($request->input('fechaCaducidad')));
+            if ($userData->acceso_web_traba == 0) {
+                /*NmCttraba::where('ccod_traba', $request->input('id'))->update(
                         array(
                             'acceso_web_traba' => true,
                             'fdef10' => null
                         )
-                    );
-                    User::where('ccod_traba', $request->input('id'))->update(
-                        array(
-                            'access' => true,
-                            'access_end_at' => null,
-                            'first_login' => true
-                        )
-                    );
-                    //Mail::to($newUser['cemail_traba'])->send(new MailableClass);
-                    Mail::to('miguel.blas_03@hotmail.com')->send(new MailableClass($newUser));
-                    return redirect()->route('employees')->with('status', 'Se otorgarón los accesos a la web');
-                }
-                if ($dateCreate <= date_create($request->input('fechaCaducidad'))) {
+                    );*/
+                User::where('ccod_traba', $request->input('id'))->update(
+                    array(
+                        'first_login' => true,
+                        'acceso_web_traba' => true,
+                        'fdef10' => null,
+                        'password' => Hash::make($userData['ccod_traba'])
+                    )
+                );
+                //Mail::to($newUser['cemail_traba'])->send(new MailableClass);
+                Mail::to('miguel.blas_03@hotmail.com')->send(new MailableClass($userData));
+                return redirect()->route('employees')->with('status', 'Se otorgarón los accesos a la web');
+            }
+            if ($dateCreate <= date_create($request->input('fechaCaducidad'))) {
 
-                    NmCttraba::where('ccod_traba', $request->input('id'))->update(
+                /*NmCttraba::where('ccod_traba', $request->input('id'))->update(
                         array(
                             'fdef10' => $maxAccess,
                             'acceso_web_traba' => true
                         )
-                    );
-                    User::where('ccod_traba', $request->input('id'))->update(
-                        array(
-                            'access_end_at' => $maxAccess,
-                            'access' => true
-                        )
-                    );
-                    $userLimit = NmCttraba::where('ccod_traba', $request->input('id'))->first();
+                    );*/
+                User::where('ccod_traba', $request->input('id'))->update(
+                    array(
+                        'fdef10' => $maxAccess,
+                        'acceso_web_traba' => true
+                    )
+                );
+                $userLimit = User::where('ccod_traba', $request->input('id'))->first();
 
-                    //Mail::to($newUser['cemail_traba'])->send(new MailableClass);
-                    Mail::to('miguel.blas_03@hotmail.com')->send(new MailableClass($userLimit));
-                    return redirect()->route('employees')->with('status', 'El usuario tiene accesos hasta: ' . $maxAccess);
-                } else {
-                    return redirect()->route('employees')->with('statusFail', 'La fecha no puede ser menor a la fecha actual');
-                }
+                //Mail::to($newUser['cemail_traba'])->send(new MailableClass);
+                Mail::to('miguel.blas_03@hotmail.com')->send(new MailableClass($userLimit));
+                return redirect()->route('employees')->with('status', 'El usuario tiene accesos hasta: ' . $maxAccess);
             } else {
+                return redirect()->route('employees')->with('statusFail', 'La fecha no puede ser menor a la fecha actual');
+            }
+            /*} else {
                 User::create([
-                    'name' => $newUser['cnomb_traba'],
-                    'email' => $newUser['cemail_traba'],
                     'first_login' => true,
-                    'ccod_traba' => $newUser['ccod_traba'],
-                    'password' => Hash::make($newUser['ccod_traba'])
+                    'password' => Hash::make($userData['ccod_traba']),
+                    'acceso_web_traba' => true,
+                    'fdef10' => null
                 ]);
-                NmCttraba::where('ccod_traba', $newUser['ccod_traba'])->update(
+                /*
+                NmCttraba::where('ccod_traba', $userData['ccod_traba'])->update(
                     array(
                         'acceso_web_traba' => true,
                         'fdef10' => null
                     )
                 );
                 //Mail::to($newUser['cemail_traba'])->send(new MailableClass);
-                Mail::to('miguel.blas_03@hotmail.com')->send(new MailableClass($newUser));
+                Mail::to('miguel.blas_03@hotmail.com')->send(new MailableClass($userData));
 
                 return redirect()->route('employees')->with('status', 'Se otorgarón los accesos a la web');
-            }
+            }*/
         } catch (Exception $e) {
             return redirect()->route('employees')->with('statusFail', 'Ocurrio un error en la solicitud!');
         }

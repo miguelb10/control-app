@@ -46,13 +46,23 @@
                 <td class="text-right">{{ $invoiceItem->Total_Aporte}}</td>
                 <td class="text-right">{{ $invoiceItem->Neto}}</td>
                 <td class="text-center">
+                  @if ($invoiceItem->id_cbdocumentos != NULL)
+                  <form method="POST" action="{{ route('invoices.download') }}" id="download{{ $invoiceItem->id_cbdocumentos}}">
+                    @csrf
+                    <input type="hidden" value="{{ $invoiceItem->id_cbdocumentos}}" id="id_doc" name="id_doc">
+                    <a href="#" onclick="document.getElementById('download'+{{ $invoiceItem->id_cbdocumentos}}).submit()"><span class="material-icons">
+                        cloud_download
+                      </span></a>
+                  </form>
+                  @else
                   <form method="POST" action="{{ route('invoices.download') }}" id="download">
                     @csrf
                     <input type="hidden" value="{{ $invoiceItem->id_cbdocumentos}}" id="id_doc" name="id_doc">
                     <a href="#" onclick="document.getElementById('download').submit()"><span class="material-icons">
                         cloud_download
                       </span></a>
-                  </form>
+                  </form>                      
+                  @endif
                 </td>
 
               </tr>

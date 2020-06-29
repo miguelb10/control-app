@@ -33,10 +33,10 @@
                 <td>{{ $log->Nombre_Archivo}}</td>
                 <td class="text-center">{{ $log->Total_Descargas}}</td>
                 <td class="text-center">
-                  <form method="POST" action="{{ route('logs.show') }}" id="downloads">
+                  <form method="POST" action="{{ route('logs.show') }}" id="downloads{{ $log->id_doc}}">
                     @csrf
                     <input type="hidden" value="{{ $log->id_doc}}" id="id_doc" name="id_doc">
-                    <a href="#" onclick="document.getElementById('downloads').submit()"><span class="material-icons">
+                    <a href="#" onclick="document.getElementById('downloads'+{{ $log->id_doc}}).submit()"><span class="material-icons">
                         remove_red_eye
                       </span></a>
                   </form>

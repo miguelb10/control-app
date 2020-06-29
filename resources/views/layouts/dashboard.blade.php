@@ -71,7 +71,7 @@
             </a>
           </li>
           @endif
-          @if (Auth::user()->role == 'admin')
+          @if (Auth::user()->crole_traba == 'admin')
           <li class="nav-item ">
             <a class="nav-link" href="/employees">
               <i class="material-icons">supervisor_account</i>
@@ -104,7 +104,7 @@
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="navbar-brand tema_color" href="javascript:;">Bienvenid@ {{ Auth::user()->name }}</a>
+                <a class="navbar-brand tema_color" href="javascript:;">Bienvenid@ {{ Auth::user()->cnomb_traba }}</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown"

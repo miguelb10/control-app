@@ -68,17 +68,17 @@ class LoginController extends Controller
             $this->validate($request, $rules, $messages);
         } else {
             $validateDate = User::where('ccod_traba', $request->input('ccod_traba'))->first();
-            if($validateDate->access_end_at < date('Y-m-d') && $validateDate->access_end_at != null){
-                NmCttraba::where('ccod_traba', $request->input('ccod_traba'))->update(
+            if($validateDate->fdef10 < date('Y-m-d') && $validateDate->fdef10 != null){
+                User::where('ccod_traba', $request->input('ccod_traba'))->update(
                     array(
                         'acceso_web_traba' => false
                     )
                 );
-                User::where('ccod_traba', $request->input('ccod_traba'))->update(
+                /*User::where('ccod_traba', $request->input('ccod_traba'))->update(
                     array(
                         'access' => false
                     )
-                );
+                );*/
                 Auth::logout();
                 $rules = [
                     'ruc' =>  'required|numeric|max:1'
@@ -92,7 +92,7 @@ class LoginController extends Controller
             }else{
                     
                 Log::create([
-                    'user_id' => Auth::user()->id,
+                    'user_id' => Auth::user()->id_cttraba,
                     'page' => '/home',
                     'description' => 'Inicio sesión',
                 ]);

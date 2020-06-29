@@ -20,12 +20,12 @@ class ProfileController extends Controller
     public function index()
     {
         Log::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->ccod_traba,
             'page' => '/profile',
             'description' => 'Ver Perfil',
             'created_at' => ''
         ]);
-        $profile = NmCttraba::where('ccod_traba', Auth::user()->ccod_traba)->first();
+        $profile = User::where('ccod_traba', Auth::user()->ccod_traba)->first();
         return view('profile', [
             'profile' => $profile
         ]);
@@ -59,7 +59,7 @@ class ProfileController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
-        NmCttraba::where('ccod_traba', $request->input('ccod_traba'))->update(
+        User::where('ccod_traba', $request->input('ccod_traba'))->update(
             array(
                 'cnomb_traba' => $request->input('cnomb_traba'),
                 'capat_traba' => $request->input('capat_traba'),
@@ -68,16 +68,19 @@ class ProfileController extends Controller
                 'cnruc_traba' => $request->input('cnruc_traba'),
                 'cdire_traba' => $request->input('cdire_traba'),
                 'cemail_traba' => $request->input('cemail_traba'),
+                'password' => Hash::make($request->input('password')),
+                'first_login' => false,
             )
         );
 
+        /*
         User::where('ccod_traba', $request->input('ccod_traba'))->update(
             array(
                 'name' => $request->input('cnomb_traba'),
                 'password' => Hash::make($request->input('password')),
                 'first_login' => false,
             )
-        );
+        );*/
 
         return redirect()->route('profile')->with('status', 'Datos actualizados correctamente');;
     }
