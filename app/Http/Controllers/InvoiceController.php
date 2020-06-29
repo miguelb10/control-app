@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
-use App\NmCbdocumento;
-use App\NmLndocumento;
+use App\Models\Log;
+use App\Models\NmCbdocumento;
+use App\Models\NmLndocumento;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class InvoiceController extends Controller
 {

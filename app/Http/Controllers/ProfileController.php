@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
-use App\NmCttraba;
-use App\User;
+use App\Models\Log;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfileController extends Controller
 {

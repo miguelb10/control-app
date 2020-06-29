@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
-use App\NmLndocumento;
+use App\Models\Log;
+use App\Models\NmLndocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

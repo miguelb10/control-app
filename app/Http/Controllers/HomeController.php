@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
-use App\NmLndocumento;
-use App\WebConfig;
+use App\Models\Log;
+use App\Models\NmLndocumento;
+use App\Models\WebConfig;
 use Exception;
-use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

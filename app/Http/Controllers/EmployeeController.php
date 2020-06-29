@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Log;
+use App\Models\Log;
 use App\Mail\MailableClass;
-use App\NmCttraba;
-use App\User;
-use Carbon\Carbon;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
