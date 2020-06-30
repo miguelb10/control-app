@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use App\Models\NmLndocumento;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,26 +18,32 @@ class LogController extends Controller
 
     public function index()
     {
-
-        $logs=DB::select('EXEC dbo.sp_Web_Consulta_Login @cruc = ?,
+        try {
+            $logs = DB::select(
+                'EXEC dbo.sp_Web_Consulta_Login @cruc = ?,
         @ccod_traba = ?, @ccod_eje = ?, @ccod_tpla = ?, @ctipo = ?',
-        [session('rucSession'), '', '', '', 'I']);
-        $selectTipo = DB::select('Exec dbo.sp_Web_Consulta_Login @cruc=?
-        ,@ctipo=?',[session('rucSession'), 'P']);
-
-        Log::create([
-            'user_id' => Auth::user()->id_cttraba,
-            'page' => '/invoices',
-            'description' => 'Vista Facturas',
-        ]);
-        return view('logs', compact('logs', 'selectTipo'));
+                [session('rucSession'), '', '', '', 'I']
+            );
+            Log::create([
+                'user_id' => Auth::user()->id_cttraba,
+                'page' => '/invoices',
+                'description' => 'Vista Facturas',
+            ]);
+            return view('logs', compact('logs'));
+        } catch (Exception $e) {
+            $logs = null;
+            return view('logs', compact('logs'));
+        }
     }
 
     public function show(Request $request)
     {
-
-        $details = NmLndocumento::where('id_cbdocumentos', $request->input('id_doc'))->get();
-        return view('downloads', compact('details'));
+        try {
+            $details = NmLndocumento::where('id_cbdocumentos', $request->input('id_doc'))->get();
+            return view('downloads', compact('details'));
+        } catch (Exception $e) {
+            $details = null;
+            return view('downloads', compact('details'));
+        }
     }
-
 }

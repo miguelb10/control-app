@@ -1,11 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-@if (session('statusFail'))
-<div class="alert alert-danger" role="alert">
-  {{ session('statusFail') }}
-</div>
-@endif
+@if ($tryCorrect == true)
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -21,7 +17,7 @@
                     @if ($validateFirstLogin == true)
                     <h5 style="Color: red"><strong>Por seguridad debe cambiar su contraseña antes de continuar!</strong>
                     </h5>
-                    <a href="/profile" class="btn btn-success">Cambiar Contraseña</a>
+                    <a href="{{ route('profile') }}" class="btn btn-success">Cambiar Contraseña</a>
                     @endif
                 </div>
             </div>
@@ -92,35 +88,60 @@
                 <div class="card-header text-center">Cambiar tema</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-1 text-center">
+                        </div>
+                        <div class="col-md-2 text-center">
                             <form method="POST" action="{{ route('home.change') }}" id="changeV">
                                 @csrf
                                 <input type="hidden" value="verde" id="tema" name="tema">
                                 <a href="#" class="btn btn-success"
-                                    onclick="document.getElementById('changeV').submit()">Verde</a>
+                                    onclick="document.getElementById('changeV').submit()"></a>
                             </form>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-2 text-center">
                             <form method="POST" action="{{ route('home.change') }}" id="changeR">
                                 @csrf
                                 <input type="hidden" value="rojo" id="tema" name="tema">
                                 <a href="#" class="btn btn-danger"
-                                    onclick="document.getElementById('changeR').submit()">Rojo</a>
+                                    onclick="document.getElementById('changeR').submit()"></a>
                             </form>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-2 text-center">
                             <form method="POST" action="{{ route('home.change') }}" id="changeA">
                                 @csrf
                                 <input type="hidden" value="azul" id="tema" name="tema">
                                 <a href="#" class="btn btn-primary"
-                                    onclick="document.getElementById('changeA').submit()">Azul</a>
+                                    onclick="document.getElementById('changeA').submit()"></a>
                             </form>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <form method="POST" action="{{ route('home.change') }}" id="changeC">
+                                @csrf
+                                <input type="hidden" value="celeste" id="tema" name="tema">
+                                <a href="#" class="btn btn-celeste"
+                                    onclick="document.getElementById('changeC').submit()"></a>
+                            </form>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <form method="POST" action="{{ route('home.change') }}" id="changeN">
+                                @csrf
+                                <input type="hidden" value="naranja" id="tema" name="tema">
+                                <a href="#" class="btn btn-naranja"
+                                    onclick="document.getElementById('changeN').submit()"></a>
+                            </form>
+                        </div>
+                        <div class="col-md-1 text-center">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+@endif
+@else
+<div class="alert alert-danger" role="alert">
+  Error en el sistema, por favor comuníquese con el administrador
 </div>
 @endif
 @endsection

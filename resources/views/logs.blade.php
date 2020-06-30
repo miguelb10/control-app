@@ -23,6 +23,7 @@
               <th>Detalle</th>
             </thead>
             <tbody>
+              @if ($logs != null)
               @forelse ($logs as $log)
               <tr>
                 <td class="text-center">{{ $log->Codigo}}</td>
@@ -44,9 +45,14 @@
               </tr>
               @empty
               <tr>
-                <td colspan="7" style="text-align: center">No se encontraron facturas</td>
+                <td colspan="8" style="text-align: center">No se encontraron regitros</td>
               </tr>
               @endforelse
+              @else
+              <tr>
+                <td colspan="8" style="text-align: center">No se encontraron registros</td>
+              </tr>
+              @endif
             </tbody>
           </table>
         </div>

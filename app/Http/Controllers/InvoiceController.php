@@ -18,36 +18,38 @@ class InvoiceController extends Controller
     }
     public function index()
     {
-        $invoices = DB::select(
-            'EXEC dbo.sp_Web_Consulta_Boletas_Pago @cruc = ?,
-        @ccod_traba = ?',
-            [session('rucSession'), Auth::user()->ccod_traba]
-        );
+        try {
+            $invoices = DB::select(
+                'EXEC dbo.sp_Web_Consulta_Boletas_Pago @cruc = ?, @ccod_traba = ?',
+                [session('rucSession'), Auth::user()->ccod_traba]
+            );
 
-        Log::create([
-            'user_id' => Auth::user()->id_cttraba,
-            'page' => '/invoices',
-            'description' => 'Vista Facturas',
-        ]);
-        return view('invoices', compact('invoices'));
+            Log::create([
+                'user_id' => Auth::user()->id_cttraba,
+                'page' => '/invoices',
+                'description' => 'Vista Facturas',
+            ]);
+            return view('invoices', compact('invoices'));
+        } catch (Exception $e) {
+            $invoices = null;
+            return view('invoices', compact('invoices'));
+        }
     }
 
     public function update(Request $request)
     {
         if ($request->input('id_doc') != null) {
             try {
+                $documento = NmCbdocumento::where('id_cbdocumentos', $request->input('id_doc'))->first();
+                $file = $documento->cruta_file . "\\" . $documento->cname_file;
+                $headers = [
+                    'Content-Type' => 'application/pdf',
+                ];
                 NmLndocumento::create([
                     'id_cbdocumentos' => $request->input('id_doc'),
                     'dfch_descarga' => date("d-m-Y H:i:s"),
                     'cpc_descarga' => $this->get_client_ip()
                 ]);
-
-                $documento = NmCbdocumento::where('id_cbdocumentos', $request->input('id_doc'))->first();
-                //$file = public_path() . "/img/Logo.png";
-                $file = $documento->cruta_file."\\".$documento->cname_file;
-                $headers = [
-                    'Content-Type' => 'application/pdf',
-                ];
                 return response()->download($file, $documento->cname_file, $headers);
             } catch (Exception $e) {
                 return redirect()->route('invoices.filter')->with('statusFail', 'El documento no se encuentra disponible');

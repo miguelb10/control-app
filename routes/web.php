@@ -3,23 +3,30 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'HomeController@index')->name('home1');
-Route::get('/invoices', 'InvoiceController@Index')->name('invoices.filter');
-Route::post('/invoices', 'InvoiceController@Update')->name('invoices.download');
+$empresa = '/crt';
 
-Auth::routes(['register' => false]);
+Route::get($empresa, 'HomeController@index')->name('home');
+Route::get($empresa.'/invoices', 'InvoiceController@Index')->name('invoices.filter');
+Route::post($empresa.'/invoices', 'InvoiceController@Update')->name('invoices.download');
 
-Route::get('/home', 'HomeController@index')->name('home2');
-Route::post('/home', 'HomeController@change')->name('home.change');
+Auth::routes(['register' => false,
+'password/confirm' => false,
+'password/email' => false,
+'password/reset' => false,]);
 
-Route::get('/employees', 'EmployeeController@Index')->name('employees');
-Route::post('/employees', 'EmployeeController@Update')->name('employees.update');
+Route::get($empresa.'/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post($empresa.'/login', 'Auth\LoginController@login');
+Route::post($empresa.'/logout', 'Auth\LoginController@logout')->name('logout');
+Route::post($empresa.'/home', 'HomeController@change')->name('home.change');
 
-Route::get('/employees/{employee}', 'EmployeeController@Show')->name('employee.show');
+Route::get($empresa.'/employees', 'EmployeeController@Index')->name('employees');
+Route::post($empresa.'/employees', 'EmployeeController@Update')->name('employees.update');
 
-Route::get('/logs', 'LogController@Index')->name(('logs'));
-Route::get('/downloads', 'LogController@Index')->name(('logs.sho'));
-Route::post('/downloads', 'LogController@Show')->name(('logs.show'));
+Route::get($empresa.'/employees/{employee}', 'EmployeeController@Show')->name('employee.show');
 
-Route::get('/profile', 'ProfileController@Index')->name('profile');
-Route::post('/profile','ProfileController@Update')->name('profile.update');
+Route::get($empresa.'/logs', 'LogController@Index')->name(('logs'));
+Route::get($empresa.'/downloads', 'LogController@Index')->name(('logs.sho'));
+Route::post($empresa.'/downloads', 'LogController@Show')->name(('logs.show'));
+
+Route::get($empresa.'/profile', 'ProfileController@Index')->name('profile');
+Route::post($empresa.'/profile','ProfileController@Update')->name('profile.update');

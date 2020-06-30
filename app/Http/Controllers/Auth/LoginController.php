@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\AdCtcia;
+use App\Models\AdCtcia;
 use App\Http\Controllers\Controller;
-use App\Log;
-use App\NmCttraba;
+use App\Models\Log;
+use App\Models\NmCttraba;
 use App\Providers\RouteServiceProvider;
-use App\User;
-use App\WebConfig;
+use App\Models\WebConfig;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -67,18 +66,13 @@ class LoginController extends Controller
 
             $this->validate($request, $rules, $messages);
         } else {
-            $validateDate = User::where('ccod_traba', $request->input('ccod_traba'))->first();
+            $validateDate = NmCttraba::where('ccod_traba', $request->input('ccod_traba'))->first();
             if($validateDate->fdef10 < date('Y-m-d') && $validateDate->fdef10 != null){
-                User::where('ccod_traba', $request->input('ccod_traba'))->update(
+                NmCttraba::where('ccod_traba', $request->input('ccod_traba'))->update(
                     array(
                         'acceso_web_traba' => false
                     )
                 );
-                /*User::where('ccod_traba', $request->input('ccod_traba'))->update(
-                    array(
-                        'access' => false
-                    )
-                );*/
                 Auth::logout();
                 $rules = [
                     'ruc' =>  'required|numeric|max:1'

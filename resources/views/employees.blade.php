@@ -31,6 +31,7 @@
               <th>Acción</th>
             </thead>
             <tbody>
+              @if ($employees != null)                  
               @forelse ($employees as $employee)
               <tr>
                 <td class="text-center">{{ $employee->ccod_traba}}</td>
@@ -57,9 +58,14 @@
               </tr>
               @empty
               <tr>
-                <td colspan="6" style="text-align: center">No se encontraron facturas</td>
+                <td colspan="6" style="text-align: center">No se encontraron usuarios</td>
               </tr>
               @endforelse
+              @else
+              <tr>
+                <td colspan="6" style="text-align: center">No se encontraron usuarios</td>
+              </tr>
+              @endif
             </tbody>
           </table>
         </div>

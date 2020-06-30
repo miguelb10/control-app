@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class NmCttraba extends Authenticatable
 {
     protected $dateFormat = 'M j Y h:i:s';
     use Notifiable;
