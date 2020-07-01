@@ -19,7 +19,7 @@ class ProfileController extends Controller
     {
         try {
             Log::create([
-                'user_id' => Auth::user()->ccod_traba,
+                'ccod_traba' => Auth::user()->ccod_traba,
                 'page' => '/profile',
                 'description' => 'Ver Perfil',
                 'created_at' => ''

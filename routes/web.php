@@ -3,22 +3,22 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-//$empresa = '/';
-
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/invoices', 'InvoiceController@Index')->name('invoices.filter');
-Route::post('/invoices', 'InvoiceController@Update')->name('invoices.download');
-
 Auth::routes(['register' => false,
 'password/confirm' => false,
 'password/email' => false,
 'password/reset' => false,]);
 
+Route::get('/', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@change')->name('home.change');
+Route::get('/home', 'HomeController@Index')->name('homee');
+
+Route::get('/invoices', 'InvoiceController@Index')->name('invoices.filter');
+Route::post('/invoices', 'InvoiceController@Update')->name('invoices.download');
+
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::post('/home', 'HomeController@change')->name('home.change');
-Route::get('/home', 'HomeController@Index')->name('homee');
+Route::get('/logout', 'Auth\LoginController@showLoginForm')->name('logout.get');
 
 Route::get('/employees', 'EmployeeController@Index')->name('employees');
 Route::post('/employees', 'EmployeeController@Update')->name('employees.update');

@@ -25,7 +25,7 @@ class LogController extends Controller
                 [session('rucSession'), '', '', '', 'I']
             );
             Log::create([
-                'user_id' => Auth::user()->id_cttraba,
+                'ccod_traba' => Auth::user()->ccod_traba,
                 'page' => '/invoices',
                 'description' => 'Vista Facturas',
             ]);

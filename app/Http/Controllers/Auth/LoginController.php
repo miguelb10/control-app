@@ -89,7 +89,7 @@ class LoginController extends Controller
             } else {
                 try {
                     Log::create([
-                        'user_id' => Auth::user()->id_cttraba,
+                        'ccod_traba' => Auth::user()->ccod_traba,
                         'page' => '/home',
                         'description' => 'Inicio sesión',
                     ]);

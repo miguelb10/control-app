@@ -25,7 +25,7 @@ class EmployeeController extends Controller
         @ctipo = ?', [session('rucSession'), '', "E"]);
 
             Log::create([
-                'user_id' => Auth::user()->id_cttraba,
+                'ccod_traba' => Auth::user()->ccod_traba,
                 'page' => '/employees',
                 'description' => 'administrar empleados'
             ]);
