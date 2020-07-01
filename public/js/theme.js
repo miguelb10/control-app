@@ -1,18 +1,7 @@
 $(document).ready(function() {
-    $('#invoices').DataTable({
+    $('#alltable').DataTable({
         "lengthChange": false,
         responsive: true
-    });
-});
-$(document).ready(function() {
-    $('#users').DataTable({
-        "lengthChange": false,
-        responsive: true
-    });
-});
-$(document).ready(function() {
-    $('#logs').DataTable({
-        "lengthChange": false
     });
 });
 

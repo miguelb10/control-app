@@ -19,7 +19,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table id="invoices" class="table table-bordered nowrap" style="width:100%">
+          <table id="alltable" class="table table-bordered nowrap" style="width:100%">
             <thead class="text-primary text-center">
               <th>Tipo</th>
               <th>Periodo</th>
@@ -30,6 +30,7 @@
               <th>Total Egreso</th>
               <th>Total Aporte</th>
               <th>Neto</th>
+              <th>Total Descargas</th>
               <th>Descargar</th>
             </thead>
             <tbody>
@@ -45,6 +46,7 @@
                 <td class="text-right">{{ $invoiceItem->Total_Egreso}}</td>
                 <td class="text-right">{{ $invoiceItem->Total_Aporte}}</td>
                 <td class="text-right">{{ $invoiceItem->Neto}}</td>
+                <td class="text-center">{{ $invoiceItem->Total_Descargas}}</td>
                 <td class="text-center">
                   @if ($invoiceItem->id_cbdocumentos != NULL)
                   <form method="POST" action="{{ route('invoices.download') }}" id="download{{ $invoiceItem->id_cbdocumentos}}">

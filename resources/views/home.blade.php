@@ -85,7 +85,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">Cambiar tema</div>
+                <div class="card-header text-center">Cambiar apariencia</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-1 text-center">

@@ -56,6 +56,7 @@ class LoginController extends Controller
         @ctipo = ?', [$request->input('ruc'), $request->input('ccod_traba'), "c"]);
         if ($data == null) {
             Auth::logout();
+            echo 'eho';
             $rules = [
                 'ruc' =>  'required|numeric|max:1'
             ];
@@ -94,7 +95,7 @@ class LoginController extends Controller
                 session(['rucSession' => $request->input('ruc')]);
                 $empresa = AdCtcia::where('ccod_regtri', $request->input('ruc'))->first();
                 session(['empSession' => $empresa->cdsc_cia]);
-                session(['imgRuta' => $webConfig->ruta]);
+                session(['imgName' => $webConfig->img_name]);
                 session(['tema' => $webConfig->tema_color]);
                 $user->update([
                     'ultimo_login' => Carbon::now()->toDateString(),

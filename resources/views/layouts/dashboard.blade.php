@@ -1,16 +1,14 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="shortcut icon" href="{{ asset('img/CRT.ico') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>RUC: {{ session('rucSession')}}</title>
 
   <script src="{{ asset('js/core/jquery.min.js') }}" defer></script>
-
   <script src="{{ asset('js/core/popper.min.js') }}" defer></script>
   <script src="{{ asset('js/plugins/perfect-scrollbar.jquery.min.js') }}" defer></script>
   <script src="{{ asset('js/core/bootstrap-material-design.min.js') }}" defer></script>
@@ -27,9 +25,9 @@
   <link href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   @if (session('tema')!=null)
-  <link href="{{ asset(session('tema')) }}" rel="stylesheet">
+  <link href="{{ asset('css/dashboard/'.session('tema')) }}" rel="stylesheet">
   @else
-  <link href="{{ asset('css/dashboard/verde.css?v=2.1.2') }}" rel="stylesheet">
+  <link href="{{ asset('css/dashboard/verde.css') }}" rel="stylesheet">
   @endif
 </head>
 
@@ -37,7 +35,11 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="green" data-background-color="white">
       <div class="logo"><a href="{{ route('home') }}" class="simple-text logo-normal">
-          <img src="{{ session('imgRuta') }}" style="width: 100%">
+          @if (session('tema')!=null)
+          <img src="{{ asset('img/'.session('imgName')) }}" style="width: 100%">
+          @else
+          <img src="" style="width: 100%">
+          @endif
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -82,8 +84,8 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand tema_color" href="javascript:;">
-              RUC: {{ session('rucSession')}} -<br class="title_line"> {{ session('empSession') }}</a>
+            <a class="navbar-brand tema_color" href="javascript:;"><strong>
+              RUC: {{ session('rucSession')}} -<br class="title_line"> {{ session('empSession') }}</strong></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -128,7 +130,7 @@
       </div>
       <footer class="footer">
         <div class="container-fluid">
-          <a href="http://www.crt.com.pe/" target="_blank">
+          <a href="http://www.crt.com.pe/" style="color: #001941" target="_blank">
             <p>@2020 Commit Rollback Technology - All rights reserved</p>
           </a>
         </div>

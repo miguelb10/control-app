@@ -1,3 +1,7 @@
+.fecha_color {
+    color: #4caf50 !important;
+}
+
 html {
     font-family: sans-serif;
     line-height: 1.15;

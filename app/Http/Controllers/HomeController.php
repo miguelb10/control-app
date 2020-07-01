@@ -44,36 +44,14 @@ class HomeController extends Controller
     {
         try {
             $newColor = $request->input('tema');
-            //if ($request->input('tema') == 'verde') {
             WebConfig::where('ccod_regtri', session('rucSession'))->update(
                 array(
-                    'tema_color' => 'css/dashboard/' . $newColor . '.css'
+                    'tema_color' => $newColor . '.css'
                 )
             );
-            session(['tema' => 'css/dashboard/'.$newColor.'.css']);
+            session(['tema' => $newColor.'.css']);
 
             return redirect()->route('home')->with('status', 'Se aplico el nuevo tema');
-            /*} else if ($request->input('tema') == 'rojo') {
-                WebConfig::where('ccod_regtri', session('rucSession'))->update(
-                    array(
-                        'tema_color' => 'css/dashboard/rojo.css'
-                    )
-                );
-                session(['tema' => 'css/dashboard/rojo.css']);
-
-                return redirect()->route('home')->with('status', 'Se aplico el nuevo tema');
-            } else if ($request->input('tema') == 'azul') {
-                WebConfig::where('ccod_regtri', session('rucSession'))->update(
-                    array(
-                        'tema_color' => 'css/dashboard/azul.css'
-                    )
-                );
-                session(['tema' => 'css/dashboard/azul.css']);
-
-                return redirect()->route('home')->with('status', 'Se aplico el nuevo tema');
-            } else {
-                return redirect()->route('home')->with('statusFail', 'No se encontro el tema seleccionado');
-            }*/
         } catch (Exception $e) {
             return redirect()->route('home')->with('statusFail', 'Error al aplicar tema');;
         }

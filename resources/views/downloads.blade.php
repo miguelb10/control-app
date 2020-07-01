@@ -10,7 +10,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="logs" class="table table-bordered nowrap" style="width:100%">
+                    <table id="alltable" class="table table-bordered nowrap" style="width:100%">
                         <thead class="text-primary text-center">
                             <th>ID documento</th>
                             <th>Fecha y hora</th>
@@ -31,11 +31,14 @@
                             @endforelse
                             @else
                             <tr>
-                              <td colspan="3" style="text-align: center">No se encontraron registros</td>
+                                <td colspan="3" style="text-align: center">No se encontraron registros</td>
                             </tr>
                             @endif
                         </tbody>
                     </table>
+                </div>
+                <div class="text-center">
+                    <a href="{{ route('logs') }}" class="btn btn-danger" style="color: white">Regresar</a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,6 @@ class CreateLogsTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->string('page');
-            //$table->timestamp('created_at');
             $table->string('description');
             $table->timestamps();
         });

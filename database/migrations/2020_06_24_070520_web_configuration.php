@@ -17,9 +17,7 @@ class WebConfiguration extends Migration
             $table->id();
             $table->bigInteger('ccod_regtri');
             $table->string('img_name');
-            $table->string('ruta');
             $table->string('tema_color');
-            $table->timestamps();
         });
     }
 

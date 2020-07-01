@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="row">
-
   <div class="col-md-12">
     <div class="card">
       <div class="card-header card-header-primary">
@@ -11,7 +10,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table id="logs" class="table table-bordered" style="width:100%">
+          <table id="alltable" class="table table-bordered nowrap" style="width:100%">
             <thead class="text-primary text-center">
               <th>Código usuario</th>
               <th>Periodo</th>
@@ -62,16 +61,3 @@
 </div>
 
 @endsection
-
-<script>
-  function loadPage() {
-    ComboAno();
-}
-
-function ComboAnio() {
-    var n = (new Date()).getFullYear()
-    var select = document.getElementById("anio");
-    for (var i = n; i >= 1900; i--) select.options.add(new Option(i, i));
-};
-window.onload = ComboAnio;
-</script>
