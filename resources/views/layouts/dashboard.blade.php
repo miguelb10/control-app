@@ -37,8 +37,6 @@
       <div class="logo"><a href="{{ route('home') }}" class="simple-text logo-normal">
           @if (session('tema')!=null)
           <img src="{{ asset('img/'.session('imgName')) }}" style="width: 100%">
-          @else
-          <img src="" style="width: 100%">
           @endif
         </a></div>
       <div class="sidebar-wrapper">
@@ -63,7 +61,7 @@
             </a>
           </li>
           @endif
-          @if (Auth::user()->crole_traba == 'admin')
+          @if (Auth::user()->crole_traba == 'admin' && Auth::user()->first_login != true)
           <li class="nav-item ">
             <a class="nav-link" href="{{ route('employees') }}">
               <i class="material-icons">supervisor_account</i>

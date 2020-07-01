@@ -25,7 +25,7 @@
     </div>
 </div>
 
-@if (Auth::user()->crole_traba == 'admin')
+@if (Auth::user()->crole_traba == 'admin' && $validateFirstLogin == false)
 <div class="row">
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">

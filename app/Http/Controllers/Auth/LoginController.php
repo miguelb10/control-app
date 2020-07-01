@@ -8,6 +8,7 @@ use App\Models\Log;
 use App\Models\NmCttraba;
 use App\Providers\RouteServiceProvider;
 use App\Models\WebConfig;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -46,7 +47,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function username(){
+    public function username()
+    {
         return 'ccod_traba';
     }
 
@@ -68,7 +70,7 @@ class LoginController extends Controller
             $this->validate($request, $rules, $messages);
         } else {
             $validateDate = NmCttraba::where('ccod_traba', $request->input('ccod_traba'))->first();
-            if($validateDate->fdef10 < date('Y-m-d') && $validateDate->fdef10 != null){
+            if ($validateDate->fdef10 < date('Y-m-d') && $validateDate->fdef10 != null) {
                 NmCttraba::where('ccod_traba', $request->input('ccod_traba'))->update(
                     array(
                         'acceso_web_traba' => false
@@ -78,29 +80,32 @@ class LoginController extends Controller
                 $rules = [
                     'ruc' =>  'required|numeric|max:1'
                 ];
-    
+
                 $messages = [
                     'ruc.max' => 'Usuario no cuenta con acceso a la web'
                 ];
-    
+
                 $this->validate($request, $rules, $messages);
-            }else{
-                    
-                Log::create([
-                    'user_id' => Auth::user()->id_cttraba,
-                    'page' => '/home',
-                    'description' => 'Inicio sesión',
-                ]);
-                $webConfig = WebConfig::where('ccod_regtri', $request->input('ruc'))->first();
-                session(['rucSession' => $request->input('ruc')]);
-                $empresa = AdCtcia::where('ccod_regtri', $request->input('ruc'))->first();
-                session(['empSession' => $empresa->cdsc_cia]);
-                session(['imgName' => $webConfig->img_name]);
-                session(['tema' => $webConfig->tema_color]);
-                $user->update([
-                    'ultimo_login' => Carbon::now()->toDateString(),
-                    'ip' => $request->getClientIp()
-                ]);
+            } else {
+                try {
+                    Log::create([
+                        'user_id' => Auth::user()->id_cttraba,
+                        'page' => '/home',
+                        'description' => 'Inicio sesión',
+                    ]);
+                    $webConfig = WebConfig::where('ccod_regtri', $request->input('ruc'))->first();
+                    session(['rucSession' => $request->input('ruc')]);
+                    $empresa = AdCtcia::where('ccod_regtri', $request->input('ruc'))->first();
+                    session(['empSession' => $empresa->cdsc_cia]);
+                    session(['imgName' => $webConfig->img_name]);
+                    session(['tema' => $webConfig->tema_color]);
+                    $user->update([
+                        'ultimo_login' => Carbon::now()->toDateString(),
+                        'ip' => $request->getClientIp()
+                    ]);
+                } catch (Exception $e) {
+                    Auth::logout();
+                }
             }
         }
     }
