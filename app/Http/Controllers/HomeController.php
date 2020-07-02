@@ -42,18 +42,22 @@ class HomeController extends Controller
 
     public function change(Request $request)
     {
-        try {
-            $newColor = $request->input('tema');
-            WebConfig::where('ccod_regtri', session('rucSession'))->update(
-                array(
-                    'tema_color' => $newColor . '.css'
-                )
-            );
-            session(['tema' => $newColor.'.css']);
+        if (Auth::user()->crole_traba == 'admin') {
+            try {
+                $newColor = $request->input('tema');
+                WebConfig::where('ccod_regtri', session('rucSession'))->update(
+                    array(
+                        'tema_color' => $newColor . '.css'
+                    )
+                );
+                session(['tema' => $newColor . '.css']);
 
-            return redirect()->route('home')->with('status', 'Se aplico el nuevo tema');
-        } catch (Exception $e) {
-            return redirect()->route('home')->with('statusFail', 'Error al aplicar tema');;
+                return redirect()->route('home')->with('status', 'Se aplico el nuevo tema');
+            } catch (Exception $e) {
+                return redirect()->route('home')->with('statusFail', 'Error al aplicar tema');;
+            }
+        } else {
+            return redirect()->route('home')->with('statusFail', 'Usted no cuenta con permisos de administrador');
         }
     }
 }

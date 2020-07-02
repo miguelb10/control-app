@@ -14,6 +14,11 @@
                         {{ session('status') }}
                     </div>
                     @endif
+                    @if (session('statusFail'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('statusFail') }}
+                    </div>
+                    @endif
                     @if ($validateFirstLogin == true)
                     <h5 style="Color: red"><strong>Por seguridad debe cambiar su contraseña antes de continuar!</strong>
                     </h5>
