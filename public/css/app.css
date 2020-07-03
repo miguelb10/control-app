@@ -74,6 +74,12 @@ section {
     color: black;
 }
 
+@media (max-width: 600px) {
+    .footer-login {
+        position: relative;
+    }
+}
+
 body {
     margin: 0;
     font-family: "Nunito", sans-serif;
